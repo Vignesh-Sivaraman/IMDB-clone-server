@@ -18,6 +18,8 @@ const server = app.listen(process.env.PORT || 3005, () => {
   console.log("I am listening");
 });
 
+console.log("hi");
+
 app.use("/actors", require("./routes/actors"));
 app.use("/producers", require("./routes/producers"));
 app.use("/movies", require("./routes/movies"));
