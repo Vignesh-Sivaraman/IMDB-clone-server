@@ -35,7 +35,6 @@ const addMovie = (req, res) => {
     if (err) return err;
     if (data.length > 0) var movieExists = true;
     else var movieExists = false;
-    console.log(movieExists);
     if (!movieExists) {
       const addMovieQ =
         "INSERT INTO movies (`moviename`, `movieyear`, `movieposter`, `movieplot`, `movieproducerid`) value(?)";
@@ -51,15 +50,12 @@ const addMovie = (req, res) => {
           return res.status(500).json({ message: `something wrong ${err}` });
         let movieId = data.insertId;
 
-        console.log(movieId);
-
         //  adding actors
 
         actors.forEach((element, i) => {
-          console.log("running");
           const relationQ =
             "INSERT INTO movierelations (`actorId`,`movieId`) value(?)";
-          console.log(element, movieId);
+
           let relationValues = [element, movieId];
           db.query(relationQ, [relationValues], (err, data) => {
             if (err)
@@ -112,7 +108,6 @@ const updateMovie = (req, res) => {
             // updating actors
 
             req.body.actors.forEach((element, i) => {
-              console.log("running");
               const relationQ =
                 "INSERT INTO movierelations (`actorId`,`movieId`) value(?)";
               let relationValues = [element, req.body.movieId];
