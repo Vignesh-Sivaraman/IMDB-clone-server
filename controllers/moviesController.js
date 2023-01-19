@@ -3,7 +3,8 @@ const db = require("../config/connect.js");
 // get All movies
 
 const getAllMovies = (req, res) => {
-  const getAllMoviesQ = "SELECT * FROM movies";
+  const getAllMoviesQ =
+    "SELECT idmovies,moviename,movieyear,movieposter,movieplot,producername, GROUP_CONCAT(a.actorname SEPARATOR ', ') as actors FROM movies AS m INNER JOIN movierelations AS r ON (m.idmovies = r.movieId) INNER JOIN actors as a ON(r.actorId = a.idactors) INNER JOIN producers as p ON (m.movieproducerid = p.idproducers) GROUP BY idmovies ORDER BY m.moviename ASC";
   db.query(getAllMoviesQ, (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length > 0) return res.status(200).json(data);
